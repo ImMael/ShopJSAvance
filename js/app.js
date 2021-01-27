@@ -5,6 +5,7 @@ const titleCourse = document.querySelectorAll('.course__item .info__card h4');
 const priceCourse = document.querySelectorAll('.course__item .info__card .discount');
 const stockCourse = document.querySelectorAll('.course__item .info__card .stock');
 const imageCourse = document.querySelectorAll('.course__item .course_img img');
+const body = document.querySelector('body');
 
 // Fonction d'ajout au panier
 
@@ -54,8 +55,32 @@ for(let i = 0; i < addToCartButtons.length; i++){
         article.appendChild(articleRemove);
 
         ListInCart.appendChild(article);
+
+     // notifications ------------
+
+        const item = document.createElement('div');
+        item.setAttribute('id','notification_container');
+
+        const itemcontent = document.createElement('div');
+        itemcontent.setAttribute('class','content');
+
+        const itemimg = document.createElement('img');
+        itemimg.setAttribute('src','img/info.png');
+
+        const itemtxt = document.createElement('p');
+        itemtxt.innerHTML = title + ' à été ajouté au panier';
+
+        
+        itemcontent.appendChild(itemimg);
+        itemcontent.appendChild(itemtxt);
+        item.appendChild(itemcontent);
+        body.appendChild(item);
+
+        
+
     });
 }
+
 
 // function AjouterAuPanier(e){
 //     e.preventDefault();
