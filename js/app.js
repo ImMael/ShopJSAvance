@@ -13,6 +13,11 @@ const body = document.querySelector('body');
 //     addToCart.addEventListener('click', AjouterAuPanier);
 // });
 
+             // notifications -------------------------------------------//
+const item = document.createElement('ul');
+item.setAttribute('id','notification_container');
+            //  -------------------------------------------------------//
+
 for(let i = 0; i < addToCartButtons.length; i++){
     const title = titleCourse[i].innerText;
     const price = priceCourse[i].innerText;
@@ -56,14 +61,10 @@ for(let i = 0; i < addToCartButtons.length; i++){
 
         ListInCart.appendChild(article);
 
-     // notifications ------------
+     // notifications ---------------------------------------------//
 
 
-
-        const item = document.createElement('div');
-        item.setAttribute('id','notification_container');
-
-        const itemcontent = document.createElement('div');
+        const itemcontent = document.createElement('li');
         itemcontent.setAttribute('class','content');
 
         const itemimg = document.createElement('img');
@@ -80,13 +81,12 @@ for(let i = 0; i < addToCartButtons.length; i++){
 
         setTimeout(function() {
 
-        itemcontent.removeChild(itemimg);
-        itemcontent.removeChild(itemtxt);
         item.removeChild(itemcontent);
-        body.removeChild(item);
+       
 
         },3000);
 
+        //  -------------------------------------------------------//
     });
 }
 

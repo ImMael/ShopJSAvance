@@ -49,18 +49,17 @@ header .submenu #img-cart {
 #cart table tbody td img {width: auto;height: 40px;}
 #cart table tbody .supprimer-item {
   display: block;
-  /* background-color: #ff5454; */
+  background-color: #ff5454;
   border-radius: 50%;
   padding: 8px;
-  height: 20px;
+  height: 10px;
   line-height: 13px;
   text-decoration: none;
   color: white;
   font-size: 11px;
   font-weight: bold;
-  width: 20px;
+  width: 10px;
   text-align: center;
-  cursor: pointer;
 }
 
 header .submenu #cart {display: none;}
@@ -237,7 +236,7 @@ header .submenu:hover #cart::-webkit-scrollbar-thumb:hover {background: #555;}
 }
 
 /*
-* Notification
+* Notification        ----------------alexis -----------------------
 */
 #notification_container {
   position: fixed;
