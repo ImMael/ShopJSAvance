@@ -146,12 +146,11 @@ function removeItem(elem){
     const index = elem.target.parentElement.parentElement.rowIndex - 1;
     const storage = localStorage.getItem('Panier');
     let panier = JSON.parse(storage);
-    console.log(index);
+    Notif(panier[index].title,'remove');
     panier.splice(index,1);
     let testa = JSON.stringify(panier);
     localStorage.setItem('Panier',testa);
     elem.target.parentElement.parentElement.remove();
-    Notif(panier.title,'remove');
 }
 
 function clearLocal(){
