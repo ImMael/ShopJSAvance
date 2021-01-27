@@ -43,7 +43,7 @@ for(let i = 0; i < addToCartButtons.length; i++){
 
         const articleRemove = document.createElement('td');
         const iconClose = document.createElement('img');
-        iconClose.setAttribute('src', '../img/x-mark.png');
+        iconClose.setAttribute('src', 'img/x-mark.png');
         iconClose.className = 'supprimer-item';
         articleRemove.appendChild(iconClose);
 

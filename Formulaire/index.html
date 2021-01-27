@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="box-login">
+
+    <h2>Formulaire de Paiement.</h2>
+
+    <form>
+        <div class="form-groupe">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" placeholder="Votre Nom" maxlength="25">
+            <img src="ressources/check.svg" alt="icone de validation" class="icone-verif">
+            <span class="message-alerte">Entrez un nom valide</span>
+        </div>
+        <div class="form-groupe">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" placeholder="Votre Prénom" maxlength="25">
+            <img src="ressources/check.svg" alt="icone de validation" class="icone-verif">
+            <span class="message-alerte">Entrez un prénom valide</span>
+        </div>
+        <div class="form-groupe">
+            <label for="adress">Adresse</label>
+            <input type="text" id="adress" placeholder="Votre Adresse" maxlength="25">
+            <img src="ressources/check.svg" alt="icone de validation" class="icone-verif">
+            <span class="message-alerte">Entrez une adresse valide</span>
+        </div>
+        <div class="form-groupe">
+            <label for="mail">E-mail</label>
+            <input type="text" id="mail" placeholder="Votre e-mail" maxlength="25">
+            <img src="ressources/check.svg" alt="icone de validation" class="icone-verif">
+            <span class="message-alerte">Entrez un mail valide (xxx@xxxx.fr)</span>
+        </div>
+        <div class="form-groupe">
+            <label for="tel">Téléphone</label>
+            <input type="text" id="tel" placeholder="Numéro de téléphone" maxlength="10">
+            <img src="ressources/check.svg" alt="icone de validation" class="icone-verif">
+            <span class="message-alerte">Entrez un numéro valide</span>
+        </div>
+        <div class="form-groupe">
+            <label for="card">Carte bancaire</label>
+            <input type="text" id="card" placeholder="Numéro de Carte" maxlength="16">
+            <img src="ressources/check.svg" alt="icone de validation" class="icone-verif">
+            <span class="message-alerte">Entrez un numéro de carte valide</span>
+        </div>
+        <button class="valider" type="submit">Passer la commande</button>
+    </form>
+
+</div>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
