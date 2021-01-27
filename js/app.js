@@ -6,58 +6,12 @@ const priceCourse = document.querySelectorAll('.course__item .info__card .discou
 const stockCourse = document.querySelectorAll('.course__item .info__card .stock');
 const imageCourse = document.querySelectorAll('.course__item .course_img img');
 const body = document.querySelector('body');
-let panier = JSON.parse(localStorage.getItem('Panier')) || [];
 
 // Fonction d'ajout au panier
 
 // addToCartButtons.forEach(addToCart => {
 //     addToCart.addEventListener('click', AjouterAuPanier);
 // });
-
-function currentCart(){
-    if(localStorage.getItem('Panier') !== null){
-        for(let i = 0; i < JSON.parse(localStorage.getItem('Panier')).length; i++){
-            console.log(JSON.parse(localStorage.getItem('Panier'))[i].title);
-            const parseTitle = JSON.parse(localStorage.getItem('Panier'))[i].title;
-            const parsePrice = JSON.parse(localStorage.getItem('Panier'))[i].price;
-            const parseAmount = JSON.parse(localStorage.getItem('Panier'))[i].stock;
-            const parseImgSrc = JSON.parse(localStorage.getItem('Panier'))[i].img;
-
-            const article = document.createElement('tr');
-
-            const articleImg = document.createElement('td')
-            const imageTd = document.createElement('img');
-            imageTd.setAttribute('src', parseImgSrc);
-            articleImg.appendChild(imageTd);
-
-            const articleTitle = document.createElement('td');
-            articleTitle.innerText = parseTitle;
-
-            const articlePrice = document.createElement('td');
-            articlePrice.innerText = parsePrice;
-
-            const articleStock = document.createElement('td');
-            articleStock.innerText = parseAmount;
-
-            const articleRemove = document.createElement('td');
-            const iconClose = document.createElement('img');
-            iconClose.setAttribute('src', 'img/x-mark.png');
-            iconClose.className = 'supprimer-item';
-            articleRemove.appendChild(iconClose);
-
-            article.appendChild(articleImg);
-            article.appendChild(articleTitle);
-            article.appendChild(articlePrice);
-            article.appendChild(articleStock);
-            article.appendChild(articleRemove);
-
-            ListInCart.appendChild(article);
-        }
-        
-    }
-    
-}
-currentCart();
 
 for(let i = 0; i < addToCartButtons.length; i++){
     const title = titleCourse[i].innerText;
@@ -66,47 +20,27 @@ for(let i = 0; i < addToCartButtons.length; i++){
     const imgSrc = imageCourse[i].attributes["src"].value;
     const image = imageCourse[i];
 
-        
+    
 
     addToCartButtons[i].addEventListener('click', () => {
-        // console.log(title + " : " + price + " Amount : " + stock);
-        // console.log(imgSrc);
-
-        let articlePanier = {
-            img: imgSrc,
-            title: title,
-            price: price,
-            stock: 1
-        };
-        panier.push(articlePanier);
-
-        
-
-        localStorage.setItem('Panier', JSON.stringify(panier));
-
-        const parseTitle = JSON.parse(localStorage.getItem('Panier'))[i].title;
-        const parsePrice = JSON.parse(localStorage.getItem('Panier'))[i].price;
-        const parseAmount = JSON.parse(localStorage.getItem('Panier'))[i].stock;
-        const parseImgSrc = JSON.parse(localStorage.getItem('Panier'))[i].img;
-        // const image = imageCourse[i];
-
-        // console.log(parseTitle);
+        console.log(title + " : " + price + " Amount : " + stock);
+        console.log(imgSrc);
 
         const article = document.createElement('tr');
 
         const articleImg = document.createElement('td')
         const imageTd = document.createElement('img');
-        imageTd.setAttribute('src', parseImgSrc);
+        imageTd.setAttribute('src', imgSrc);
         articleImg.appendChild(imageTd);
 
         const articleTitle = document.createElement('td');
-        articleTitle.innerText = parseTitle;
+        articleTitle.innerText = title;
 
         const articlePrice = document.createElement('td');
-        articlePrice.innerText = parsePrice;
+        articlePrice.innerText = price;
 
         const articleStock = document.createElement('td');
-        articleStock.innerText = parseAmount;
+        articleStock.innerText = 1;
 
         const articleRemove = document.createElement('td');
         const iconClose = document.createElement('img');
@@ -123,6 +57,8 @@ for(let i = 0; i < addToCartButtons.length; i++){
         ListInCart.appendChild(article);
 
      // notifications ------------
+
+
 
         const item = document.createElement('div');
         item.setAttribute('id','notification_container');
@@ -142,7 +78,14 @@ for(let i = 0; i < addToCartButtons.length; i++){
         item.appendChild(itemcontent);
         body.appendChild(item);
 
-        
+        setTimeout(function() {
+
+        itemcontent.removeChild(itemimg);
+        itemcontent.removeChild(itemtxt);
+        item.removeChild(itemcontent);
+        body.removeChild(item);
+
+        },3000);
 
     });
 }
