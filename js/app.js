@@ -125,6 +125,7 @@ for(let i = 0; i < addToCartButtons.length; i++){
         ListInCart.appendChild(article);
         Notif(title);
         setStocks();
+        discounting();
     });
 }
 /**
@@ -213,5 +214,42 @@ function setStocks(){
         }
         Stock.push(articlesStocks);
         localStorage.setItem('Stocks',JSON.stringify(Stock));
+    }
+}
+let time = 60;
+/**
+ * Timer for the discount
+ */
+function timer(){
+    time--;
+    if(time == 0){
+        unDiscount();
+    }
+}
+/**
+ * Apply the discount on the courses
+ */
+function discounting(){
+    let newPrice = 0.0;
+    timed = false;
+    for(let i = 0;i < panier.length;i++){
+        //console.log(panier[i].price);
+        newPrice += parseInt(panier[i].price.replace('€',''));
+        console.log(newPrice);
+    }
+    if(newPrice >= 50){
+        alert('Promotion ! 1 ARTICLE OFFERT PENDANT 1 MINUTE !')
+        let timed = window.setInterval(timer,1000);
+        for(let i = 0; i < addToCartButtons.length;i++){
+            priceCourse[i].innerText = 'Gratuit !'
+        }
+    }
+}
+/**
+ * remove the discount on the courses
+ */
+function unDiscount(){
+    for(let i = 0;i < addToCartButtons.length;i++){
+        priceCourse[i].innerText = panier[i].price;
     }
 }
