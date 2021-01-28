@@ -216,16 +216,6 @@ function setStocks(){
         localStorage.setItem('Stocks',JSON.stringify(Stock));
     }
 }
-let time = 60;
-/**
- * Timer for the discount
- */
-function timer(){
-    time--;
-    if(time == 0){
-        unDiscount();
-    }
-}
 /**
  * Apply the discount on the courses
  */
@@ -239,9 +229,10 @@ function discounting(){
     }
     if(newPrice >= 50){
         alert('Promotion ! 1 ARTICLE OFFERT PENDANT 1 MINUTE !')
-        let timed = window.setInterval(timer,1000);
+        setTimeout(unDiscount,60000);
+        console.log(timed);
         for(let i = 0; i < addToCartButtons.length;i++){
-            priceCourse[i].innerText = 'Gratuit !'
+            priceCourse[i].innerText = 'Gratuit !';
         }
     }
 }
