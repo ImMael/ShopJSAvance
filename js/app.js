@@ -8,16 +8,21 @@ const imageCourse = document.querySelectorAll('.course__item .course_img img');
 const emptyCart = document.querySelector('#empty-cart');
 const body = document.querySelector('body');
 let panier = JSON.parse(localStorage.getItem('Panier')) || [];
+
 const item = document.createElement('ul');
 item.setAttribute('id','notification_container');
 
 document.addEventListener('DOMContentLoaded', loadLocalStorage);
 emptyCart.addEventListener('click',clearLocal);
 
+/**
+ * function that load the localStorage (this function is called after DOM Content loaded)
+ */
 function loadLocalStorage(){
     if(localStorage.getItem('Panier') != null){
         for(let i = 0; i < panier.length; i++){
             console.log(panier[i].title);
+            // let pos = Stock.indexOf(panier[i]);
             const article = document.createElement('tr');
 
             const articleImg = document.createElement('td');
@@ -61,19 +66,16 @@ function loadLocalStorage(){
 // });
 
 for(let i = 0; i < addToCartButtons.length; i++){
-    const title = titleCourse[i].innerText;
-    const price = priceCourse[i].innerText;
-    const stock = stockCourse[i].innerText;
-    const imgSrc = imageCourse[i].attributes["src"].value;
-    const image = imageCourse[i];
-    
-
     addToCartButtons[i].addEventListener('click', () => {
+        const title = titleCourse[i].innerText;
+        const price = priceCourse[i].innerText;
+        const stock = stockCourse[i].innerText;
+        const imgSrc = imageCourse[i].attributes["src"].value;
+        const image = imageCourse[i];
         console.log(title + " : " + price + " Amount : " + stock);
         console.log(imgSrc);
         if(stockCourse[i].innerText === '1'){
             stockCourse[i].innerText = 'Rupture de Stock';
-            addToCartButtons[i].style.cursor = 'not-allowed';
             addToCartButtons[i].classList.add('disabled');
         } else {
             stockCourse[i].innerText = parseInt(stockCourse[i].innerText) - 1;
@@ -85,7 +87,7 @@ for(let i = 0; i < addToCartButtons.length; i++){
             price: price,
             stock: 1
         };
-        console.log(imageCourse[i].attributes["src"].value);
+        // console.log(imageCourse[i].attributes["src"].value);
         panier.push(articlePanier);
         console.log(articlePanier.title);
 
@@ -122,9 +124,14 @@ for(let i = 0; i < addToCartButtons.length; i++){
 
         ListInCart.appendChild(article);
         Notif(title);
+        setStocks();
     });
 }
-
+/**
+ * Function that create a notification for adding something to cart or removing something from the cart, hide after 3 seconds
+ * @param {string} title name of the "course"
+ * @param {string} arg2 arg to set the notification on buy or remove (has mentionned above)
+ */
 function Notif(title,arg2 = "buy"){
     const itemcontent = document.createElement('li');
     itemcontent.setAttribute('class','content');
@@ -147,7 +154,10 @@ function Notif(title,arg2 = "buy"){
         item.removeChild(itemcontent);
     },3000);
 }
-
+/**
+ * Add back a course in the stock after removing the course from the cart
+ * @param {HTML Element} index Element to add the stock
+ */
 function reAdd(index){
     const position = index;
     const storage = localStorage.getItem('Panier');
@@ -165,28 +175,43 @@ function reAdd(index){
         }
     }
 }
-
+/**
+ * Remove item in the cart and in the localstorage
+ * @param {*} elem element to delete
+ */
 function removeItem(elem){
     const index = elem.target.parentElement.parentElement.rowIndex - 1;
     const storage = localStorage.getItem('Panier');
     let panier = JSON.parse(storage);
     Notif(panier[index].title,'remove');
     reAdd(index);
+    setStocks();
     panier.splice(index,1);
     let testa = JSON.stringify(panier);
     localStorage.setItem('Panier',testa);
     elem.target.parentElement.parentElement.remove();
     
 }
-
+/**
+ * Clearing the cart
+ */
 function clearLocal(){
     localStorage.setItem('Panier','[]');
     ListInCart.remove();
     document.location.reload();
 }
-
-// function AjouterAuPanier(e){
-//     e.preventDefault();
-//     // let id = parseInt(e.target.attributes[2].value);
-//     console.log(e.target.parentNode.firstChild.nextSibling.innerText);
-// }
+/**
+ * Set the stocks in the localStorage (to display it)
+ */
+function setStocks(){
+    localStorage.setItem('Stocks','[]');
+    Stock = [];
+    for(let i = 0; i < addToCartButtons.length;i++){
+        let articlesStocks = {
+            title: titleCourse[i].innerText,
+            stocks: parseInt(stockCourse[i].innerText)
+        }
+        Stock.push(articlesStocks);
+        localStorage.setItem('Stocks',JSON.stringify(Stock));
+    }
+}

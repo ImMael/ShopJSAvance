@@ -1,9 +1,9 @@
 const COURSES = {
-  1: {id: 1, img: 'ux_ui.jpg', title: 'UX/UI', initial_price: 200, price: 9.99, mark: 4, stock: 10},
-  2: {id: 2, img: 'php_8.png', title: 'PHP 8', initial_price: 200, price: 9.99, mark: 3, stock: 10},
-  3: {id: 3, img: 'react_js.png', title: 'React JS', initial_price: 200, price: 9.99, mark: 2, stock: 5},
-  4: {id: 4, img: 'node_js.jpg', title: 'Node JS', initial_price: 200, price: 9.99, mark: 5, stock: 3},
-  5: {id: 5, img: 'my_sql.png', title: 'MySQL', initial_price: 200, price: 9.99, mark: 4, stock: 2}
+  0: {id: 1, img: 'ux_ui.jpg', title: 'UX/UI', initial_price: 200, price: 9.99, mark: 4, stock: 10},
+  1: {id: 2, img: 'php_8.png', title: 'PHP 8', initial_price: 200, price: 9.99, mark: 3, stock: 10},
+  2: {id: 3, img: 'react_js.png', title: 'React JS', initial_price: 200, price: 9.99, mark: 2, stock: 5},
+  3: {id: 4, img: 'node_js.jpg', title: 'Node JS', initial_price: 200, price: 9.99, mark: 5, stock: 3},
+  4: {id: 5, img: 'my_sql.png', title: 'MySQL', initial_price: 200, price: 9.99, mark: 4, stock: 2}
 }
 /* <div class="course__item">
       <figure class="course_img">
@@ -26,8 +26,10 @@ const COURSES = {
     </div> */
 
 const CardsContainer = document.querySelector('.courses__container');
+let stocked = JSON.parse(localStorage.getItem('Stocks')) || [];
+//console.log(stocked[0].stocks);
 
-for(let i=1;i <= 5;i++){
+for(let i=0; i <= 5; i++){
   let id = COURSES[i]['id'];
   let image = COURSES[i]['img'];
   let title = COURSES[i]['title'];
@@ -74,7 +76,12 @@ for(let i=1;i <= 5;i++){
   const dispoPara = document.createElement('p');
   const spanDispo = document.createElement('span');
   spanDispo.className = 'stock';
-  spanDispo.innerText = stock;
+
+  if(stocked[i].stocks == null){
+    spanDispo.innerText = 'Rupture de Stock';
+  } else {
+    spanDispo.innerText = stocked[i].stocks;
+  }
   // dispoPara.innerHTML = `Disponible: ${spanDispo}`;
   dispoPara.innerText = 'Disponible: ';
   dispoPara.appendChild(spanDispo);
