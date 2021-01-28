@@ -154,8 +154,9 @@ function removeItem(elem){
 }
 
 function clearLocal(){
-    localStorage.clear();
+    localStorage.setItem('Panier','[]');
     ListInCart.remove();
+    document.location.reload();
 }
 
 // function AjouterAuPanier(e){

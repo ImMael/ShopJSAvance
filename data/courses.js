@@ -83,11 +83,7 @@ for(let i=1;i <= 5;i++){
   addButton.setAttribute('href', '#');
   addButton.setAttribute('data-id', id);
   addButton.className = 'add-to-cart';
-
-  const iconAdd = document.createElement('i');
-  iconAdd.className = 'fa fa-cart-plus';
-  addButton.appendChild(iconAdd);
-  addButton.innerText = 'Ajouter au panier';
+  addButton.innerHTML += '<i class="fa fa-cart-plus"></i>Ajouter au panier'
 
   cardInfo.appendChild(nameItem);
   cardInfo.appendChild(figureRates);
