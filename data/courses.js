@@ -5,7 +5,7 @@ const COURSES = {
   4: {id: 4, img: 'node_js.jpg', title: 'Node JS', initial_price: 200, price: 9.99, mark: 5, stock: 3},
   5: {id: 5, img: 'my_sql.png', title: 'MySQL', initial_price: 200, price: 9.99, mark: 4, stock: 2}
 }
-{/* <div class="course__item">
+/* <div class="course__item">
       <figure class="course_img">
         <img src="img/courses/ux_ui.jpg">
       </figure>
@@ -23,8 +23,8 @@ const COURSES = {
         </p>
         <a href="#" class="add-to-cart" data-id="1"><i class="fa fa-cart-plus"></i>Ajouter au panier</a>
       </div>
-    </div> */}
-    
+    </div> */
+
 const CardsContainer = document.querySelector('.courses__container');
 
 for(let i=1;i <= 5;i++){
@@ -35,7 +35,7 @@ for(let i=1;i <= 5;i++){
   let price = COURSES[i]['price'];
   let mark = COURSES[i]['mark'];
   let stock = COURSES[i]['stock'];
-  console.log(id, image, title, initial_price, price, mark, stock);
+  // console.log(id, image, title, initial_price, price, mark, stock);
 
   const courseItem = document.createElement('div');
   courseItem.className = 'course__item';

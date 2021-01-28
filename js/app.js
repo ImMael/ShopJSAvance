@@ -66,12 +66,18 @@ for(let i = 0; i < addToCartButtons.length; i++){
     const stock = stockCourse[i].innerText;
     const imgSrc = imageCourse[i].attributes["src"].value;
     const image = imageCourse[i];
-
     
 
     addToCartButtons[i].addEventListener('click', () => {
         console.log(title + " : " + price + " Amount : " + stock);
         console.log(imgSrc);
+        if(stockCourse[i].innerText === '1'){
+            stockCourse[i].innerText = 'Rupture de Stock';
+            addToCartButtons[i].style.cursor = 'not-allowed';
+            addToCartButtons[i].classList.add('disabled');
+        } else {
+            stockCourse[i].innerText = parseInt(stockCourse[i].innerText) - 1;
+        }
 
         let articlePanier = {
             img: imgSrc,
@@ -142,15 +148,35 @@ function Notif(title,arg2 = "buy"){
     },3000);
 }
 
+function reAdd(index){
+    const position = index;
+    const storage = localStorage.getItem('Panier');
+    let panier = JSON.parse(storage);
+    for(let i=0;courseItems.length;i++){
+        let title = titleCourse[i].innerText;
+        if(panier[position].title === title){
+            if(stockCourse[i].innerText === 'Rupture de Stock'){
+                stockCourse[i].innerText = 0;
+            } else {
+                stockCourse[i].innerText = parseInt(stockCourse[i].innerText) + 1;
+                addToCartButtons[i].classList.remove('disabled');
+                break;
+            }
+        }
+    }
+}
+
 function removeItem(elem){
     const index = elem.target.parentElement.parentElement.rowIndex - 1;
     const storage = localStorage.getItem('Panier');
     let panier = JSON.parse(storage);
     Notif(panier[index].title,'remove');
+    reAdd(index);
     panier.splice(index,1);
     let testa = JSON.stringify(panier);
     localStorage.setItem('Panier',testa);
     elem.target.parentElement.parentElement.remove();
+    
 }
 
 function clearLocal(){
