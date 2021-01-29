@@ -26,7 +26,7 @@ const COURSES = {
     </div> */
 
 const CardsContainer = document.querySelector('.courses__container');
-let stocked = JSON.parse(localStorage.getItem('Stocks')) || [];
+let stocked = JSON.parse(localStorage.getItem('Stocks')) || [{"title":"UX/UI","stocks":10},{"title":"PHP 8","stocks":10},{"title":"React JS","stocks":5},{"title":"Node JS","stocks":3},{"title":"MySQL","stocks":2}];
 //console.log(stocked[0].stocks);
 
 for(let i=0; i <= 5; i++){

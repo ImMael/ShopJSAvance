@@ -188,8 +188,7 @@ function removeItem(elem){
     reAdd(index);
     setStocks();
     panier.splice(index,1);
-    let testa = JSON.stringify(panier);
-    localStorage.setItem('Panier',testa);
+    localStorage.setItem('Panier',JSON.stringify(panier));
     elem.target.parentElement.parentElement.remove();
     
 }
@@ -199,6 +198,7 @@ function removeItem(elem){
 function clearLocal(){
     localStorage.setItem('Panier','[]');
     ListInCart.remove();
+    resetStocks();
     document.location.reload();
 }
 /**
@@ -215,6 +215,23 @@ function setStocks(){
         Stock.push(articlesStocks);
         localStorage.setItem('Stocks',JSON.stringify(Stock));
     }
+}
+/**
+ * take the defaults values of the stocks and re-apply them to the courses
+ */
+function resetStocks(){
+    let defaultStocks;
+    localStorage.setItem('Stocks','[]');
+    Stock = [];
+    Object.keys(COURSES).forEach(function(key) {
+        defaultStocks = COURSES[key].stock;
+        let articlesStocks = {
+            title: titleCourse[key].innerText,
+            stocks: defaultStocks
+        }
+        Stock.push(articlesStocks);
+        localStorage.setItem('Stocks',JSON.stringify(Stock));
+    });
 }
 /**
  * Apply the discount on the courses
