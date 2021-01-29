@@ -289,6 +289,9 @@ function unDiscount(){
 
 let secondes = 60;
 let titleWeb = document.querySelector('#courses-list h1');
+/**
+ * Function that repeat itself to determine the discount
+ */
 function timer(){
     secondes--;
     titleWeb.innerText = 'Cours en ligne | Promotion pendant encore : '+ secondes +' secondes';
@@ -299,7 +302,9 @@ function timer(){
         unDiscount();
     }
 }
-
+/**
+ * Update price to display it in the "Valider le panier" button
+ */
 function updatePriceCart(){
     let tPrice = localStorage.getItem('TotalCart');
     validCart[1].innerText = 'Valider le panier (' + tPrice + '€)';

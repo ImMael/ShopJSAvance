@@ -97,4 +97,5 @@ inpcard.addEventListener('input',  function(e) {
 submit.addEventListener('click',function(e){
     e.preventDefault();
     alert('Formulaire accepté mais envoie impossible');
+    document.location.href = '../index.html';
 });
