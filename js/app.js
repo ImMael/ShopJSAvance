@@ -93,6 +93,10 @@ for(let i = 0; i < addToCartButtons.length; i++){
 
         localStorage.setItem('Panier', JSON.stringify(panier));
 
+        if(priceCourse[i].innerText === 'Gratuit !'){
+            unDiscount();
+        }
+
         const article = document.createElement('tr');
 
         const articleImg = document.createElement('td')
@@ -183,9 +187,20 @@ function reAdd(index){
 function removeItem(elem){
     const index = elem.target.parentElement.parentElement.rowIndex - 1;
     const storage = localStorage.getItem('Panier');
+    const total = localStorage.getItem('TotalCart');
     let panier = JSON.parse(storage);
     Notif(panier[index].title,'remove');
     reAdd(index);
+    if(total > 50){
+        Object.keys(COURSES).forEach(function(key) {
+            let defaultPrice = COURSES[key].price;
+            priceCourse[key].innerText = defaultPrice + ' €';
+        });
+    }
+    localStorage.setItem('TotalCart',total - parseFloat(priceCourse[index].innerText));
+    if(localStorage.getItem('TotalCart') <= 0){
+        localStorage.setItem('TotalCart',parseFloat('0'));
+    }
     setStocks();
     panier.splice(index,1);
     localStorage.setItem('Panier',JSON.stringify(panier));
@@ -197,9 +212,11 @@ function removeItem(elem){
  */
 function clearLocal(){
     localStorage.setItem('Panier','[]');
+    localStorage.setItem('TotalCart','');
     ListInCart.remove();
     resetStocks();
     document.location.reload();
+    
 }
 /**
  * Set the stocks in the localStorage (to display it)
@@ -238,16 +255,16 @@ function resetStocks(){
  */
 function discounting(){
     let newPrice = 0.0;
-    timed = false;
+    localStorage.setItem('TotalCart','');
     for(let i = 0;i < panier.length;i++){
         //console.log(panier[i].price);
-        newPrice += parseInt(panier[i].price.replace('€',''));
-        console.log(newPrice);
+        newPrice += parseFloat(panier[i].price.replace('€',''));
+        
     }
+    localStorage.setItem('TotalCart',newPrice);
     if(newPrice >= 50){
-        alert('Promotion ! 1 ARTICLE OFFERT PENDANT 1 MINUTE !')
-        setTimeout(unDiscount,60000);
-        console.log(timed);
+        alert('Promotion ! 1 ARTICLE OFFERT PENDANT 1 MINUTE !');
+        setTimeout(unDiscount,10000);
         for(let i = 0; i < addToCartButtons.length;i++){
             priceCourse[i].innerText = 'Gratuit !';
         }
