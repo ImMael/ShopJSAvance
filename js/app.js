@@ -6,6 +6,7 @@ const priceCourse = document.querySelectorAll('.course__item .info__card .discou
 const stockCourse = document.querySelectorAll('.course__item .info__card .stock');
 const imageCourse = document.querySelectorAll('.course__item .course_img img');
 const emptyCart = document.querySelector('#empty-cart');
+const validCart = document.querySelectorAll('#cart a');
 const body = document.querySelector('body');
 let panier = JSON.parse(localStorage.getItem('Panier')) || [];
 
@@ -93,10 +94,6 @@ for(let i = 0; i < addToCartButtons.length; i++){
 
         localStorage.setItem('Panier', JSON.stringify(panier));
 
-        if(priceCourse[i].innerText === 'Gratuit !'){
-            unDiscount();
-        }
-
         const article = document.createElement('tr');
 
         const articleImg = document.createElement('td')
@@ -129,7 +126,12 @@ for(let i = 0; i < addToCartButtons.length; i++){
         ListInCart.appendChild(article);
         Notif(title);
         setStocks();
-        discounting();
+        if(priceCourse[i].innerText === 'Gratuit !'){
+            unDiscount();
+        } else {
+            discounting();
+        }
+        updatePriceCart();
     });
 }
 /**
@@ -147,8 +149,10 @@ function Notif(title,arg2 = "buy"){
     const itemtxt = document.createElement('p');
     if(arg2 === "buy"){
         itemtxt.innerHTML = title + ' à été ajouté au panier';
-    } else {
+    } else if(arg2 === 'remove') {
         itemtxt.innerHTML = title + ' à été supprimé du panier';
+    } else if(arg2 === 'special'){
+        itemtxt.innerHTML = title;
     }
 
     itemcontent.appendChild(itemimg);
@@ -202,6 +206,7 @@ function removeItem(elem){
         localStorage.setItem('TotalCart',parseFloat('0'));
     }
     setStocks();
+    updatePriceCart();
     panier.splice(index,1);
     localStorage.setItem('Panier',JSON.stringify(panier));
     elem.target.parentElement.parentElement.remove();
@@ -253,21 +258,24 @@ function resetStocks(){
 /**
  * Apply the discount on the courses
  */
+let isDiscountable = true;
 function discounting(){
     let newPrice = 0.0;
     localStorage.setItem('TotalCart','');
     for(let i = 0;i < panier.length;i++){
-        //console.log(panier[i].price);
-        newPrice += parseFloat(panier[i].price.replace('€',''));
-        
+        if(parseFloat(panier[i].price.replace('€',''))){
+            newPrice += parseFloat(panier[i].price.replace('€',''));
+        } else {
+            newPrice += 0;
+        }
     }
     localStorage.setItem('TotalCart',newPrice);
-    if(newPrice >= 50){
-        alert('Promotion ! 1 ARTICLE OFFERT PENDANT 1 MINUTE !');
-        setTimeout(unDiscount,10000);
+    if(newPrice >= 50 && isDiscountable){
+        isDiscountable = false;
         for(let i = 0; i < addToCartButtons.length;i++){
             priceCourse[i].innerText = 'Gratuit !';
         }
+        timer();
     }
 }
 /**
@@ -277,4 +285,22 @@ function unDiscount(){
     for(let i = 0;i < addToCartButtons.length;i++){
         priceCourse[i].innerText = panier[i].price;
     }
+}
+
+let secondes = 60;
+let titleWeb = document.querySelector('#courses-list h1');
+function timer(){
+    secondes--;
+    titleWeb.innerText = 'Cours en ligne | Promotion pendant encore : '+ secondes +' secondes';
+    if(secondes > 0 && priceCourse[1].innerText === 'Gratuit !'){
+        setTimeout(timer,1000);
+    } else {
+        titleWeb.innerText = 'Cours en ligne';
+        unDiscount();
+    }
+}
+
+function updatePriceCart(){
+    let tPrice = localStorage.getItem('TotalCart');
+    validCart[1].innerText = 'Valider le panier (' + tPrice + '€)';
 }
